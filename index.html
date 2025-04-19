@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quadratic Equation Solver</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+    input {
+      width: 80px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Quadratic Equation Solver</h2>
+    <p>Enter coefficients for equation: <strong>ax² + bx + c = 0</strong></p>
+    <input type="number" id="a" placeholder="a">
+    <input type="number" id="b" placeholder="b">
+    <input type="number" id="c" placeholder="c">
+    <br>
+    <button onclick="solveEquation()">Solve</button>
+
+    <div class="output" id="result"></div>
+  </div>
+
+  <script>
+    function solveEquation() {
+      const a = parseFloat(document.getElementById("a").value);
+      const b = parseFloat(document.getElementById("b").value);
+      const c = parseFloat(document.getElementById("c").value);
+      const output = document.getElementById("result");
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        output.innerHTML = "❌ Please enter valid coefficients.";
+        return;
+      }
+
+      if (a === 0) {
+        output.innerHTML = "❌ 'a' cannot be 0 in a quadratic equation.";
+        return;
+      }
+
+      const discriminant = b * b - 4 * a * c;
+
+      if (discriminant > 0) {
+        const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+        const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+        output.innerHTML = `✅ Roots are real and different:<br>x₁ = ${root1.toFixed(4)}, x₂ = ${root2.toFixed(4)}`;
+      } else if (discriminant === 0) {
+        const root = -b / (2 * a);
+        output.innerHTML = `✅ Roots are real and equal:<br>x = ${root.toFixed(4)}`;
+      } else {
+        const realPart = (-b / (2 * a)).toFixed(4);
+        const imagPart = (Math.sqrt(-discriminant) / (2 * a)).toFixed(4);
+        output.innerHTML = `✅ Roots are complex:<br>x₁ = ${realPart} + ${imagPart}i<br>x₂ = ${realPart} - ${imagPart}i`;
+      }
+    }
+  </script>
+
+</body>
+</html>
